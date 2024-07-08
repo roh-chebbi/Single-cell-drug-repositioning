@@ -294,15 +294,14 @@ Drug.ident.res<-readRDS("TNBC_drugs_limma_all.rds")
 GSE92742.gctx.path="GSE92742_Broad_LINCS_Level5_COMPZ.MODZ_n473647x12328.gctx"
 GSE70138.gctx.path="GSE70138_Broad_LINCS_Level5_COMPZ_n118050x12328.gctx"
 Tissue="breast"
-Drug.score<-DrugScore(SC.integrated=SC.integrated,
-                     Gene.data=Gene.list,
-                     Cell.type=NULL,
-                     Drug.data=Drug.ident.res,
-                     FDA.drug.only=F,
-                     Case=Case,
-                     Tissue="breast",
-                     GSE92742.gctx=GSE92742.gctx.path,
-                     GSE70138.gctx=GSE70138.gctx.path)
+
+cell_metadata <- SC.integrated@meta.data
+cell_metadata$cluster <- SC.integrated@meta.data$celltype
+
+Drug.score<-DrugScore(cell_metadata, cluster_degs = Gene.list, 
+                        cluster_drugs = Drug.ident.res, tissue = "breast", 
+                        case = Case, gse92742_gctx_path = GSE92742.gctx.path, 
+                        gse70138_gctx_path = GSE70138.gctx.path)
 saveRDS(Drug.score,file="TNBC_drugscore_all.rds")
 
 #Drug combination
