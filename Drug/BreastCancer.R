@@ -117,7 +117,7 @@ pdf(file = "BC_plot.pdf",width = 12,height = 3)
 DimPlot(SC.integrated, reduction = "umap", split.by = "sample",group.by = "celltype")
 dev.off()
 #Save data
-saveRDS(SC.data,file="TNBC_SCdata.rds")
+saveRDS(SC.integrated,file="TNBC_SCdata.rds")
 
 #Get differential genes from limma
 SC.integrated=readRDS("TNBC_SCdata.rds")
